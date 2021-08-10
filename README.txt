@@ -1,3 +1,3 @@
-start
-npm install && npm startup
-localhos:8080
+how to start project
+npm install && npm start
+localhost:8080
