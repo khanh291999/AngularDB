@@ -4,7 +4,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -41,9 +43,9 @@ app.all("/", function (req, res, next) {
 });
 
 function authenToken(req, res, next) {
-  const authorizationHeader = req.headers['authorization'];
+  const authorizationHeader = req.headers["authorization"];
   // 'Beaer [token]'
-  const token = authorizationHeader.split(' ')[1];
+  const token = authorizationHeader.split(" ")[1];
   if (!token) res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {

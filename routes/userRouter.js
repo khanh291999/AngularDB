@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const User = require("../models/userModel");
+require("dotenv").config();
 
 router.post("/register", async (req, res) => {
   try {
@@ -49,34 +50,34 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
-
+    const { username, password } = req.body;
+    const data = req.body;
     // validate
-    if (!email || !password)
+    if (!username || !password)
       return res.status(400).json({ msg: "Not all fields have been entered." });
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ username: username });
     if (!user)
       return res
         .status(400)
-        .json({ msg: "No account with this email has been registered." });
+        .json({ msg: "No account with this username has been registered." });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
 
-    const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '30s',
+    const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "30s",
     });
-    const refreshToken = jwt.sign(email, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
 
     res.json({
       accessToken,
+      refreshToken,
       user: {
         id: user._id,
         email: user.email,
         username: user.username,
         role: user.role,
-        refreshToken : user.refreshToken
       },
     });
   } catch (err) {

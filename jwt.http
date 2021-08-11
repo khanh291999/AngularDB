@@ -1,5 +1,5 @@
 GET http://localhost:8080/user
-Authorization: Beaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhvbGV0ZXgiLCJpYXQiOjE2MjA0NzQzMDQsImV4cCI6MTYyMDQ3NDMzNH0.NsKCpIBolNdQK-l4chi2urajCvXU529VISFNHnqYkzQ
+Authorization: Beaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJfZWRpdG9yIiwicGFzc3dvcmQiOiIxMjM0NTYiLCJpYXQiOjE2Mjg2NTMwOTcsImV4cCI6MTYyODY1MzEyN30.NnbrETX0ib_F4HD8xk3LO7UMTBJDseMg-_K4ce2VrDI
 
 ###
 
@@ -7,7 +7,7 @@ POST http://localhost:8080/users/login
 Content-Type: application/json
 
 {
-  "email": "user_editor@gmail.com",
+  "username": "user_editor",
   "password": "123456"
 }
 
