@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
 
     const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "30s",
+      expiresIn: "15s",
     });
     const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
 
@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
       accessToken,
       refreshToken,
       user: {
-        id: user._id,
+        _id: user._id,
         email: user.email,
         username: user.username,
         role: user.role,

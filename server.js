@@ -1,5 +1,6 @@
 //Import npm packages
 const User = require("./models/userModel");
+const Activeuser = require("./models/activeuserModel");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -117,6 +118,75 @@ app.patch("/user/:_id", async (req, res) => {
           username: req.body.username,
           password: req.body.password,
           role: req.body.role,
+        },
+      }
+    );
+    res.json(updatePost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+//active user
+app.get("/activeuser", (req, res) => {
+  const data = {};
+
+  Activeuser.find({})
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
+
+app.get("/activeuser/:_id", (req, res) => {
+  const data = {};
+  Activeuser.findOne({
+    id: req.params.id,
+  })
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
+
+app.post("/activeuser", (req, res) => {
+  const data = req.body;
+
+  const newActiveuser = new User(data);
+  newActiveuser.save((error) => {
+    if (error) {
+      res.status(500).json({ msg: "Sorry, internal server errors" });
+    }
+    return res.json({
+      msg: " Your data has been saved!!!",
+    });
+  });
+});
+
+app.delete("/activeuser/:_id", async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const removedPost = await Activeuser.remove({ id: req.params.id });
+    res.json(removedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+app.patch("/activeuser/:_id", async (req, res) => {
+  try {
+    const updatePost = await Activeuser.updateOne(
+      { _id: req.params._id },
+      {
+        $set: {
+          username: req.body.username,
+          email: req.body.email,
         },
       }
     );
