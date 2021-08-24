@@ -2,6 +2,7 @@
 const User = require("./models/userModel");
 const Annotation = require("./models/annotationsModel");
 const Activeuser = require("./models/activeuserModel");
+const Query = require("./models/queryModel");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -56,6 +57,11 @@ function authenToken(req, res, next) {
     next();
   });
 }
+
+// /
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
 
 //user
 app.get("/user", authenToken, (req, res) => {
@@ -214,7 +220,7 @@ app.get("/annotation", (req, res) => {
 app.get("/annotation/:_id", (req, res) => {
   const data = {};
   Annotation.findOne({
-    id: req.params.id,
+    _id: req.params._id,
   })
     .then((data) => {
       // console.log('Data: ', data);
@@ -225,4 +231,31 @@ app.get("/annotation/:_id", (req, res) => {
     });
 });
 
+//Query
+app.get("/query", (req, res) => {
+  const data = {};
+
+  Query.find({})
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
+
+app.get("/query/:_id", (req, res) => {
+  const data = {};
+  Query.findOne({
+    _id: req.params._id,
+  })
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
 
