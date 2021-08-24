@@ -1,5 +1,6 @@
 //Import npm packages
 const User = require("./models/userModel");
+const Annotation = require("./models/annotationsModel");
 const Activeuser = require("./models/activeuserModel");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -144,7 +145,7 @@ app.get("/activeuser", (req, res) => {
 app.get("/activeuser/:_id", (req, res) => {
   const data = {};
   Activeuser.findOne({
-    id: req.params.id,
+    _id: req.params._id,
   })
     .then((data) => {
       // console.log('Data: ', data);
@@ -195,3 +196,33 @@ app.patch("/activeuser/:_id", async (req, res) => {
     res.json({ message: err });
   }
 });
+
+//annotations
+app.get("/annotation", (req, res) => {
+  const data = {};
+
+  Annotation.find({})
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
+
+app.get("/annotation/:_id", (req, res) => {
+  const data = {};
+  Annotation.findOne({
+    id: req.params.id,
+  })
+    .then((data) => {
+      // console.log('Data: ', data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error: ", daerrorta);
+    });
+});
+
+
